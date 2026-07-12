@@ -1,0 +1,41 @@
+package com.charly.tradecompanion.trade_companion.dto;
+
+import com.charly.tradecompanion.trade_companion.enums.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Data
+@Getter
+@Setter
+public class TradeResponse {
+
+    private Long id;
+
+    private String symbol;
+
+    private TradeDirection direction;
+
+    private TradeStatus status;
+
+    private Double entryPrice;
+
+    private Double stopLoss;
+
+    private Double takeProfit;
+
+    private Double exitPrice;
+
+    private Double profit;
+
+    private String openingNote;
+
+    private String closingNote;
+
+    private LocalDateTime openedAt;
+
+    private LocalDateTime closedAt;
+
+}
