@@ -6,12 +6,13 @@ import com.charly.tradecompanion.trade_companion.enums.TradeStatus;
 import com.charly.tradecompanion.trade_companion.mapper.TradeMapper;
 import com.charly.tradecompanion.trade_companion.repository.TradeRepository;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class TradeService {
-    private TradeRepository tradeRepository;
+    private final TradeRepository tradeRepository;
 
     public TradeService(TradeRepository tradeRepository) {
         this.tradeRepository = tradeRepository;
@@ -57,6 +58,7 @@ public class TradeService {
         return tradeRepository.findAll().stream().map(TradeMapper::toResponse).toList();
     }
 
+
     public TradeResponse getTradeById(Long id) {
 
         Trade trade = tradeRepository.findById(id)
@@ -64,5 +66,53 @@ public class TradeService {
 
         return TradeMapper.toResponse(trade);
 
+    }
+
+
+    public TradeResponse removeTradeById(Long id) {
+        Trade trade = tradeRepository.findById(id)
+                .orElseThrow();
+
+        tradeRepository.delete(trade);
+
+        return TradeMapper.toResponse(trade);
+    }
+
+    public TradeResponse updateTrade(Long id, UpdateTradeRequest tradeRequest) {
+        Trade trade = tradeRepository.findById(id)
+                .orElseThrow();
+
+
+        if (tradeRequest.getProfit() != null)
+            trade.setProfit(tradeRequest.getProfit());
+
+        if (tradeRequest.getExitPrice() != null)
+            trade.setExitPrice(tradeRequest.getExitPrice());
+
+        if (tradeRequest.getClosingNote() != null)
+            trade.setClosingNote(tradeRequest.getClosingNote());
+
+        if (tradeRequest.getDirection() != null)
+            trade.setDirection(tradeRequest.getDirection());
+
+        if (tradeRequest.getSymbol() != null)
+            trade.setSymbol(tradeRequest.getSymbol());
+
+        if (tradeRequest.getEntryPrice() != null)
+            trade.setEntryPrice(tradeRequest.getEntryPrice());
+
+        if (tradeRequest.getOpeningNote() != null)
+            trade.setOpeningNote(tradeRequest.getOpeningNote());
+
+        if (tradeRequest.getTakeProfit() != null)
+            trade.setTakeProfit(tradeRequest.getTakeProfit());
+
+        if (tradeRequest.getStopLoss() != null)
+            trade.setStopLoss(tradeRequest.getStopLoss());
+
+
+        trade = tradeRepository.save(trade);
+
+        return TradeMapper.toResponse(trade);
     }
 }

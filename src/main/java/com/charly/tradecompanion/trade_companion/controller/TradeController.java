@@ -3,7 +3,9 @@ package com.charly.tradecompanion.trade_companion.controller;
 import com.charly.tradecompanion.trade_companion.dto.CloseTradeRequest;
 import com.charly.tradecompanion.trade_companion.dto.CreateTradeRequest;
 import com.charly.tradecompanion.trade_companion.dto.TradeResponse;
+import com.charly.tradecompanion.trade_companion.dto.UpdateTradeRequest;
 import com.charly.tradecompanion.trade_companion.service.TradeService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -32,13 +34,13 @@ public class TradeController {
 
     /// Oppening trade
     @PostMapping("/trade")
-    public TradeResponse createTrade(@RequestBody CreateTradeRequest trade) {
+    public TradeResponse createTrade(@Valid @RequestBody CreateTradeRequest trade) {
         return tradeService.createTrade(trade);
     }
 
     /// Closing trade
     @PutMapping("/trade/{id}/close")
-    public TradeResponse closeTrade(@PathVariable Long id, @RequestBody CloseTradeRequest tradeData) {
+    public TradeResponse closeTrade(@PathVariable Long id, @Valid @RequestBody CloseTradeRequest tradeData) {
         return tradeService.closeTrade(tradeData , id);
     }
 
@@ -53,5 +55,15 @@ public class TradeController {
     @GetMapping("/trade/{id}")
     public TradeResponse getTradeById(@PathVariable Long id) {
         return tradeService.getTradeById(id);
+    }
+
+    @DeleteMapping("/trade/{id}")
+    public TradeResponse removeTradeById(@PathVariable Long id){
+        return tradeService.removeTradeById(id);
+    }
+
+    @PutMapping("/trade/{id}")
+    public TradeResponse updateTradeById(@PathVariable Long id , @RequestBody UpdateTradeRequest request){
+        return tradeService.updateTrade(id , request);
     }
 }
