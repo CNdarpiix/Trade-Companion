@@ -1,7 +1,7 @@
 package com.charly.tradecompanion.trade_companion.mapper;
 
-import com.charly.tradecompanion.trade_companion.dto.CreateTradeRequest;
-import com.charly.tradecompanion.trade_companion.dto.TradeResponse;
+import com.charly.tradecompanion.trade_companion.dto.trade.CreateTradeRequest;
+import com.charly.tradecompanion.trade_companion.dto.trade.TradeResponse;
 import com.charly.tradecompanion.trade_companion.entity.Trade;
 
 public class TradeMapper {

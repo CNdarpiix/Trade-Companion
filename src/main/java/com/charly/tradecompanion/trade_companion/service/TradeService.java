@@ -1,8 +1,12 @@
 package com.charly.tradecompanion.trade_companion.service;
 
-import com.charly.tradecompanion.trade_companion.dto.*;
+import com.charly.tradecompanion.trade_companion.dto.trade.CloseTradeRequest;
+import com.charly.tradecompanion.trade_companion.dto.trade.CreateTradeRequest;
+import com.charly.tradecompanion.trade_companion.dto.trade.TradeResponse;
+import com.charly.tradecompanion.trade_companion.dto.trade.UpdateTradeRequest;
 import com.charly.tradecompanion.trade_companion.entity.Trade;
 import com.charly.tradecompanion.trade_companion.enums.TradeStatus;
+import com.charly.tradecompanion.trade_companion.exception.TradeNotFoundException;
 import com.charly.tradecompanion.trade_companion.mapper.TradeMapper;
 import com.charly.tradecompanion.trade_companion.repository.TradeRepository;
 import org.springframework.stereotype.Service;
@@ -37,7 +41,7 @@ public class TradeService {
             Long id
     ) {
         Trade trade = tradeRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new TradeNotFoundException(id));
 
         trade.setClosedAt(LocalDateTime.now());/// close time
 
@@ -62,7 +66,7 @@ public class TradeService {
     public TradeResponse getTradeById(Long id) {
 
         Trade trade = tradeRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new TradeNotFoundException(id));
 
         return TradeMapper.toResponse(trade);
 
@@ -71,8 +75,7 @@ public class TradeService {
 
     public TradeResponse removeTradeById(Long id) {
         Trade trade = tradeRepository.findById(id)
-                .orElseThrow();
-
+                .orElseThrow(() -> new TradeNotFoundException(id));
         tradeRepository.delete(trade);
 
         return TradeMapper.toResponse(trade);
@@ -80,8 +83,7 @@ public class TradeService {
 
     public TradeResponse updateTrade(Long id, UpdateTradeRequest tradeRequest) {
         Trade trade = tradeRepository.findById(id)
-                .orElseThrow();
-
+                .orElseThrow(() -> new TradeNotFoundException(id));
 
         if (tradeRequest.getProfit() != null)
             trade.setProfit(tradeRequest.getProfit());

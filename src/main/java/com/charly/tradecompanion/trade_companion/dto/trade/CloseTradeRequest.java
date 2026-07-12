@@ -1,4 +1,4 @@
-package com.charly.tradecompanion.trade_companion.dto;
+package com.charly.tradecompanion.trade_companion.dto.trade;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

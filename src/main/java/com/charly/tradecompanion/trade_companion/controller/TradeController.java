@@ -1,14 +1,13 @@
 package com.charly.tradecompanion.trade_companion.controller;
 
-import com.charly.tradecompanion.trade_companion.dto.CloseTradeRequest;
-import com.charly.tradecompanion.trade_companion.dto.CreateTradeRequest;
-import com.charly.tradecompanion.trade_companion.dto.TradeResponse;
-import com.charly.tradecompanion.trade_companion.dto.UpdateTradeRequest;
+import com.charly.tradecompanion.trade_companion.dto.trade.CloseTradeRequest;
+import com.charly.tradecompanion.trade_companion.dto.trade.CreateTradeRequest;
+import com.charly.tradecompanion.trade_companion.dto.trade.TradeResponse;
+import com.charly.tradecompanion.trade_companion.dto.trade.UpdateTradeRequest;
 import com.charly.tradecompanion.trade_companion.service.TradeService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
