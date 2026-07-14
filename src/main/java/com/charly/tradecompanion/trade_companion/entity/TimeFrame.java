@@ -7,20 +7,16 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
-@Getter
 @Setter
-public class AnalysisTable {
-
+@Getter
+public class TimeFrame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private  Long id ;
 
-    private String name ;
+    private String timeFrame;
 
-    private List<TimeFrame> timeFrames ;
-
+    private int coeficiant ;
 
 }
