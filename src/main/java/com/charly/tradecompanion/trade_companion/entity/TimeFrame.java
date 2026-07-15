@@ -17,6 +17,6 @@ public class TimeFrame {
 
     private String name;
 
-    private double coefficient ;
+    private Double coefficient ;
 
 }

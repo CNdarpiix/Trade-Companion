@@ -11,12 +11,12 @@ public class Criterion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id ;
+    private Long id ;
 
-    public String name ;
+    private String name ;
 
-    public double coefficient ;
+    private Double coefficient ;
 
     @ManyToOne
-    public AnalysisTable table ;
+    private AnalysisTable table ;
 }

@@ -3,7 +3,7 @@ package com.charly.tradecompanion.trade_companion.dto.table;
 import com.charly.tradecompanion.trade_companion.entity.TimeFrame;
 import lombok.Data;
 
-import java.util.ArrayList;
+
 import java.util.List;
 @Data
 public class TableResponse {
@@ -14,7 +14,5 @@ public class TableResponse {
 
     private List<TimeFrame> timeFrames ;
 
-    public TableResponse(){
-        this.timeFrames=new ArrayList<>();
-    }
+
 }

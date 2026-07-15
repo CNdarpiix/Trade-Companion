@@ -9,8 +9,8 @@ public class EvaluationMapper {
         EvaluationResponse resp = new EvaluationResponse() ;
         resp.setId(ev.getId());
         resp.setBias(ev.getBias());
-        resp.setTimeFrame(ev.getTimeFrame());
-        resp.setCriterion(ev.getCriterion());
+        resp.setTimeFrameId(ev.getTimeFrame().getId());
+        resp.setCriterionId(ev.getCriterion().getId());
         return resp ;
     }
 

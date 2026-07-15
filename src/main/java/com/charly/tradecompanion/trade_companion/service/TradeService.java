@@ -6,7 +6,7 @@ import com.charly.tradecompanion.trade_companion.dto.trade.TradeResponse;
 import com.charly.tradecompanion.trade_companion.dto.trade.UpdateTradeRequest;
 import com.charly.tradecompanion.trade_companion.entity.Trade;
 import com.charly.tradecompanion.trade_companion.enums.TradeStatus;
-import com.charly.tradecompanion.trade_companion.exception.TradeNotFoundException;
+import com.charly.tradecompanion.trade_companion.exception.NotFoundExceptions.TradeNotFoundException;
 import com.charly.tradecompanion.trade_companion.mapper.TradeMapper;
 import com.charly.tradecompanion.trade_companion.repository.TradeRepository;
 import org.springframework.stereotype.Service;

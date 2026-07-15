@@ -3,6 +3,7 @@ package com.charly.tradecompanion.trade_companion.service;
 import com.charly.tradecompanion.trade_companion.dto.table.CreateTable;
 import com.charly.tradecompanion.trade_companion.dto.table.TableResponse;
 import com.charly.tradecompanion.trade_companion.entity.AnalysisTable;
+import com.charly.tradecompanion.trade_companion.exception.NotFoundExceptions.TableNotFoundException;
 import com.charly.tradecompanion.trade_companion.mapper.TableMapper;
 import com.charly.tradecompanion.trade_companion.repository.AnalysisTableRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,9 @@ public class TableService {
 
     public TableResponse deleteTableById(Long id){
         AnalysisTable table = analysisTableRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(
+                        () -> new TableNotFoundException(id)
+                );
 
         analysisTableRepository.delete(table);
 
@@ -34,7 +37,9 @@ public class TableService {
 
     public TableResponse getTableById(Long id){
         AnalysisTable table = analysisTableRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(
+                        () -> new TableNotFoundException(id)
+                );
 
         return TableMapper.toResponse(table) ;
     }
@@ -49,8 +54,9 @@ public class TableService {
 
     public TableResponse putTableById(CreateTable request , Long id){
         AnalysisTable table = analysisTableRepository.findById(id)
-                .orElseThrow();
-
+                .orElseThrow(
+                        () -> new TableNotFoundException(id)
+                );
         if (request.getName()!=null){
             table.setName(request.getName());
         }

@@ -7,6 +7,7 @@ import com.charly.tradecompanion.trade_companion.entity.Criterion;
 import com.charly.tradecompanion.trade_companion.entity.CriterionEvaluation;
 import com.charly.tradecompanion.trade_companion.entity.TimeFrame;
 import com.charly.tradecompanion.trade_companion.enums.AnalysisBias;
+import com.charly.tradecompanion.trade_companion.exception.NotFoundExceptions.EvaluationNotFoundException;
 import com.charly.tradecompanion.trade_companion.mapper.EvaluationMapper;
 import com.charly.tradecompanion.trade_companion.repository.CriterionEvaluationRepository;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,9 @@ public class CriterionEvaluationService {
     ){
         CriterionEvaluation evaluation =
                 evaluationRepository.findById(id)
-                        .orElseThrow();
+                        .orElseThrow(
+                                () -> new EvaluationNotFoundException(id)
+                        );
 
         evaluation.setBias(request.getBias());
 

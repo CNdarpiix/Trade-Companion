@@ -3,7 +3,6 @@ package com.charly.tradecompanion.trade_companion.controller;
 import com.charly.tradecompanion.trade_companion.dto.criterion.CreateCriterion;
 import com.charly.tradecompanion.trade_companion.dto.criterion.CriterionResponse;
 import com.charly.tradecompanion.trade_companion.service.CriterionService;
-import com.charly.tradecompanion.trade_companion.service.TableService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 @RestController
 public class CriterionController {
-    private CriterionService criterionService;
+    private final CriterionService criterionService;
 
     public CriterionController(CriterionService criterionService) {
         this.criterionService = criterionService;

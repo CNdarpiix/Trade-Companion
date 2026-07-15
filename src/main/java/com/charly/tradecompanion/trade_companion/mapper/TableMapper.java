@@ -2,10 +2,9 @@ package com.charly.tradecompanion.trade_companion.mapper;
 
 import com.charly.tradecompanion.trade_companion.dto.table.CreateTable;
 import com.charly.tradecompanion.trade_companion.dto.table.TableResponse;
-import com.charly.tradecompanion.trade_companion.dto.trade.CreateTradeRequest;
-import com.charly.tradecompanion.trade_companion.dto.trade.TradeResponse;
 import com.charly.tradecompanion.trade_companion.entity.AnalysisTable;
-import com.charly.tradecompanion.trade_companion.entity.Trade;
+
+import java.util.ArrayList;
 
 public class TableMapper {
 
@@ -15,8 +14,9 @@ public class TableMapper {
         AnalysisTable table = new AnalysisTable();
 
         table.setName(request.getName());
-        table.getTimeFrames().addAll(request.getTimeFrames());
-
+        table.setTimeFrames(
+                new ArrayList<>(request.getTimeFrames())
+        );
         return table;
     }
 
@@ -29,7 +29,9 @@ public class TableMapper {
 
         resp.setName(table.getName());
         resp.setId(table.getId());
-        resp.getTimeFrames().addAll(table.getTimeFrames());
+        resp.setTimeFrames(
+                new ArrayList<>(table.getTimeFrames())
+        );
         return resp;
     }
 }

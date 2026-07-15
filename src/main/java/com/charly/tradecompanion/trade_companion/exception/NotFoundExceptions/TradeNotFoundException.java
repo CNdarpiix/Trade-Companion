@@ -1,7 +1,7 @@
-package com.charly.tradecompanion.trade_companion.exception;
+package com.charly.tradecompanion.trade_companion.exception.NotFoundExceptions;
 
 public class TradeNotFoundException
-        extends RuntimeException {
+        extends ResourceNotFoundException {
 
     public TradeNotFoundException(Long id) {
 

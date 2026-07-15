@@ -8,8 +8,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Data
-@Getter
-@Setter
+
 public class TradeResponse {
 
     private Long id;

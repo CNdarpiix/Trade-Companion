@@ -18,7 +18,7 @@ public class AnalysisTable {
 
     private String name ;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL , orphanRemoval = true)
     private List<TimeFrame> timeFrames ;
 
     public AnalysisTable(){
