@@ -15,10 +15,12 @@ import java.util.List;
 public class CriterionService {
     private final CriterionRepository criterionRepository;
     private final AnalysisTableRepository tableRepository ;
+    private final CriterionEvaluationService criterionEvaluationService ;
 
-    public CriterionService(CriterionRepository criterionRepository , AnalysisTableRepository analysisTableRepository) {
+    public CriterionService(CriterionRepository criterionRepository , AnalysisTableRepository analysisTableRepository ,CriterionEvaluationService criterionEvaluationService ) {
         this.criterionRepository = criterionRepository;
         this.tableRepository = analysisTableRepository ;
+        this.criterionEvaluationService = criterionEvaluationService ;
     }
 
     public CriterionResponse createCriterion(CreateCriterion request){
@@ -31,6 +33,11 @@ public class CriterionService {
         criterion.setTable(table);
 
         criterion = criterionRepository.save(criterion);
+
+        criterionEvaluationService
+                .createDefaultEvaluations(
+                        criterion
+                );
 
         return CriterionMapper.toResponse(criterion);
     }
