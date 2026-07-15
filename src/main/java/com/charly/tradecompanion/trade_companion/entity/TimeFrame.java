@@ -15,8 +15,8 @@ public class TimeFrame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id ;
 
-    private String timeFrame;
+    private String name;
 
-    private int coeficiant ;
+    private double coefficient ;
 
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,4 +16,7 @@ public class CreateTable {
 
     private List<TimeFrame> timeFrames ;
 
+    public CreateTable(){
+        this.timeFrames=new ArrayList<>();
+    }
 }
