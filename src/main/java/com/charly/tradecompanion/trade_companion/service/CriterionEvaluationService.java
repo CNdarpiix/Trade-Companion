@@ -36,7 +36,7 @@ public class CriterionEvaluationService {
 
             evaluation.setTimeFrame(tf);
 
-            evaluation.setBias(AnalysisBias.NEUTRAL);
+            evaluation.setBias(AnalysisBias.RANGE);
 
             evaluationRepository.save(evaluation);
         }
