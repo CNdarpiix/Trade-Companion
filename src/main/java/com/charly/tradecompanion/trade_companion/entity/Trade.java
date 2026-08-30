@@ -1,6 +1,7 @@
 package com.charly.tradecompanion.trade_companion.entity;
 
 
+import com.charly.tradecompanion.trade_companion.entity.snapshot.AnalysisSnapshot;
 import com.charly.tradecompanion.trade_companion.enums.TradeDirection;
 import com.charly.tradecompanion.trade_companion.enums.TradeStatus;
 import jakarta.persistence.*;
@@ -44,6 +45,7 @@ public class Trade {
 
     private LocalDateTime closedAt;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private AnalysisSnapshot analysis ;
 
 }

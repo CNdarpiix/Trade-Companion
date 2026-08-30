@@ -1,27 +1,18 @@
 package com.charly.tradecompanion.trade_companion.service;
 
-import com.charly.tradecompanion.trade_companion.dto.trade.CloseTradeRequest;
-import com.charly.tradecompanion.trade_companion.dto.trade.CreateTradeRequest;
-import com.charly.tradecompanion.trade_companion.dto.trade.TradeResponse;
-import com.charly.tradecompanion.trade_companion.dto.trade.UpdateTradeRequest;
-import com.charly.tradecompanion.trade_companion.entity.AnalysisSnapshot;
-import com.charly.tradecompanion.trade_companion.entity.Criterion;
-import com.charly.tradecompanion.trade_companion.entity.CriterionEvaluation;
-import com.charly.tradecompanion.trade_companion.entity.Trade;
-import com.charly.tradecompanion.trade_companion.enums.AnalysisBias;
+import com.charly.tradecompanion.trade_companion.dto.trade.*;
+import com.charly.tradecompanion.trade_companion.entity.*;
+import com.charly.tradecompanion.trade_companion.entity.snapshot.*;
 import com.charly.tradecompanion.trade_companion.enums.TradeStatus;
 import com.charly.tradecompanion.trade_companion.exception.NotFoundExceptions.TradeNotFoundException;
 import com.charly.tradecompanion.trade_companion.mapper.TradeMapper;
-import com.charly.tradecompanion.trade_companion.repository.CriterionEvaluationRepository;
-import com.charly.tradecompanion.trade_companion.repository.CriterionRepository;
-import com.charly.tradecompanion.trade_companion.repository.TradeRepository;
+import com.charly.tradecompanion.trade_companion.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
 
 @Service
 public class TradeService {
@@ -54,23 +45,33 @@ public class TradeService {
 
         AnalysisSnapshot snapshot = new AnalysisSnapshot();
 
-        Map<Criterion, List<CriterionEvaluation>> grouped =
-                criterionEvaluationRepository.findAll()
-                        .stream()
-                        .collect(Collectors.groupingBy(
-                                CriterionEvaluation::getCriterion
-                        ));
+        List<Criterion> criteria = new ArrayList<>();
+        List<CriterionEvaluationSnapshot> criterionData = new ArrayList<>();
 
-        grouped.forEach((criterion, evaluations) -> {
+        Criterion currentCriterion = null;
+        CriterionEvaluationSnapshot currentSnapshot = null;
 
-            snapshot.getCriterion().add(criterion);
+        for (CriterionEvaluation evaluation : criterionEvaluationRepository.findAll()) {
 
-            List<CriterionEvaluation> evaluationSnapshots =
-                    evaluations.stream()
-                            .toList();
+            Criterion criterion = evaluation.getCriterion();
 
-            snapshot.getCriterionData().add(evaluationSnapshots);
-        });
+            if (!criteria.contains(criterion)) {
+
+                criteria.add(criterion);
+
+                currentCriterion = criterion;
+
+                currentSnapshot = new CriterionEvaluationSnapshot();
+                currentSnapshot.setCriterionEvaluationList(new ArrayList<>());
+
+                criterionData.add(currentSnapshot);
+            }
+
+            currentSnapshot.getCriterionEvaluationList().add(evaluation);
+        }
+
+        snapshot.setCriterion(criteria);
+        snapshot.setCriterionData(criterionData);
 
         return snapshot;
     }
