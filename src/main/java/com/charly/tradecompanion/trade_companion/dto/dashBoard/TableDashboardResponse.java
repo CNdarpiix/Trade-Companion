@@ -1,5 +1,6 @@
 package com.charly.tradecompanion.trade_companion.dto.dashBoard;
 
+import com.charly.tradecompanion.trade_companion.entity.TimeFrame;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -14,5 +15,7 @@ public class TableDashboardResponse {
     private String name ;
 
     private List<CriterionDashboardResponse> criteria = new ArrayList<>() ;
+
+    private List<TimeFrame> timeFrames ;
 
 }

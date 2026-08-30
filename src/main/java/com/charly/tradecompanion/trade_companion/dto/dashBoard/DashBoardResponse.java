@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class DashBoardResponse {
 
-    private Double Totalscore ;
+    private Double totalScore = 0.0;
 
     private List<TableDashboardResponse> tables = new ArrayList<>() ;
 

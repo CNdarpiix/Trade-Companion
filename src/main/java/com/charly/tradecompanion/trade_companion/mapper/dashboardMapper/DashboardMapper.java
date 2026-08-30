@@ -5,6 +5,9 @@ import com.charly.tradecompanion.trade_companion.dto.dashBoard.TableDashboardRes
 import com.charly.tradecompanion.trade_companion.entity.AnalysisTable;
 import com.charly.tradecompanion.trade_companion.entity.Criterion;
 
+import java.util.ArrayList;
+
+
 public class DashboardMapper {
 
 
@@ -15,6 +18,7 @@ public class DashboardMapper {
         respons.setId(table.getId());
         respons.setName(table.getName());
         respons.setScore(respons.getScore());
+        respons.setTimeFrames(new ArrayList<>(table.getTimeFrames()));
 
 
         return respons;

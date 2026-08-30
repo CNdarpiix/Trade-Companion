@@ -1,6 +1,8 @@
 package com.charly.tradecompanion.trade_companion.dto.trade;
 
+import com.charly.tradecompanion.trade_companion.entity.AnalysisSnapshot;
 import com.charly.tradecompanion.trade_companion.enums.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,5 +38,8 @@ public class TradeResponse {
     private LocalDateTime openedAt;
 
     private LocalDateTime closedAt;
+
+    private AnalysisSnapshotResponse analysis;
+
 
 }

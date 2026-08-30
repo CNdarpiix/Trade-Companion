@@ -44,4 +44,6 @@ public class Trade {
 
     private LocalDateTime closedAt;
 
+    private AnalysisSnapshot analysis ;
+
 }

@@ -15,7 +15,7 @@ public class EvaluationResponse {
 
     private Long timeFrameId ;
 
-    private Long criterionId;
+    private Long criterionId ;
 
     @Enumerated(EnumType.STRING)
     private AnalysisBias bias;

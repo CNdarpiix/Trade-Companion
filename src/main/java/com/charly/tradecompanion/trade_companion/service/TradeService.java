@@ -4,22 +4,34 @@ import com.charly.tradecompanion.trade_companion.dto.trade.CloseTradeRequest;
 import com.charly.tradecompanion.trade_companion.dto.trade.CreateTradeRequest;
 import com.charly.tradecompanion.trade_companion.dto.trade.TradeResponse;
 import com.charly.tradecompanion.trade_companion.dto.trade.UpdateTradeRequest;
+import com.charly.tradecompanion.trade_companion.entity.AnalysisSnapshot;
+import com.charly.tradecompanion.trade_companion.entity.Criterion;
+import com.charly.tradecompanion.trade_companion.entity.CriterionEvaluation;
 import com.charly.tradecompanion.trade_companion.entity.Trade;
+import com.charly.tradecompanion.trade_companion.enums.AnalysisBias;
 import com.charly.tradecompanion.trade_companion.enums.TradeStatus;
 import com.charly.tradecompanion.trade_companion.exception.NotFoundExceptions.TradeNotFoundException;
 import com.charly.tradecompanion.trade_companion.mapper.TradeMapper;
+import com.charly.tradecompanion.trade_companion.repository.CriterionEvaluationRepository;
+import com.charly.tradecompanion.trade_companion.repository.CriterionRepository;
 import com.charly.tradecompanion.trade_companion.repository.TradeRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TradeService {
     private final TradeRepository tradeRepository;
 
-    public TradeService(TradeRepository tradeRepository) {
+    private final CriterionEvaluationRepository criterionEvaluationRepository;
+
+    public TradeService(TradeRepository tradeRepository, CriterionEvaluationRepository criterionEvaluationRepository) {
         this.tradeRepository = tradeRepository;
+        this.criterionEvaluationRepository = criterionEvaluationRepository;
     }
 
     public TradeResponse createTrade(
@@ -31,10 +43,38 @@ public class TradeService {
 
         trade.setOpenedAt(LocalDateTime.now());
 
+        trade.setAnalysis(takeAnalysis());
+
         trade = tradeRepository.save(trade);
 
         return TradeMapper.toResponse(trade);
     }
+
+    private AnalysisSnapshot takeAnalysis() {
+
+        AnalysisSnapshot snapshot = new AnalysisSnapshot();
+
+        Map<Criterion, List<CriterionEvaluation>> grouped =
+                criterionEvaluationRepository.findAll()
+                        .stream()
+                        .collect(Collectors.groupingBy(
+                                CriterionEvaluation::getCriterion
+                        ));
+
+        grouped.forEach((criterion, evaluations) -> {
+
+            snapshot.getCriterion().add(criterion);
+
+            List<CriterionEvaluation> evaluationSnapshots =
+                    evaluations.stream()
+                            .toList();
+
+            snapshot.getCriterionData().add(evaluationSnapshots);
+        });
+
+        return snapshot;
+    }
+
 
     public TradeResponse closeTrade(
             CloseTradeRequest tradeRequest,

@@ -6,6 +6,7 @@ import com.charly.tradecompanion.trade_companion.entity.AnalysisTable;
 import com.charly.tradecompanion.trade_companion.exception.NotFoundExceptions.TableNotFoundException;
 import com.charly.tradecompanion.trade_companion.mapper.TableMapper;
 import com.charly.tradecompanion.trade_companion.repository.AnalysisTableRepository;
+import com.charly.tradecompanion.trade_companion.repository.TimeFrameRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,18 +14,21 @@ import java.util.List;
 @Service
 public class TableService {
     private final AnalysisTableRepository analysisTableRepository;
+    private final TimeFrameRepository timeFrameRepository;
 
-    public TableService(AnalysisTableRepository analysisTableRepository) {
+    public TableService(AnalysisTableRepository analysisTableRepository, TimeFrameRepository timeFrameRepository) {
         this.analysisTableRepository = analysisTableRepository;
+        this.timeFrameRepository = timeFrameRepository;
     }
 
     public TableResponse createTable(CreateTable request) {
         AnalysisTable table = TableMapper.toEntity(request);
         table = analysisTableRepository.save(table);
+        table.getTimeFrames().forEach(timeFrame -> timeFrameRepository.save(timeFrame));
         return TableMapper.toResponse(table);
     }
 
-    public TableResponse deleteTableById(Long id){
+    public TableResponse deleteTableById(Long id) {
         AnalysisTable table = analysisTableRepository.findById(id)
                 .orElseThrow(
                         () -> new TableNotFoundException(id)
@@ -32,19 +36,19 @@ public class TableService {
 
         analysisTableRepository.delete(table);
 
-        return TableMapper.toResponse(table) ;
+        return TableMapper.toResponse(table);
     }
 
-    public TableResponse getTableById(Long id){
+    public TableResponse getTableById(Long id) {
         AnalysisTable table = analysisTableRepository.findById(id)
                 .orElseThrow(
                         () -> new TableNotFoundException(id)
                 );
 
-        return TableMapper.toResponse(table) ;
+        return TableMapper.toResponse(table);
     }
 
-    public List<TableResponse> getAllTable(){
+    public List<TableResponse> getAllTable() {
         return analysisTableRepository
                 .findAll()
                 .stream()
@@ -52,15 +56,15 @@ public class TableService {
                 .toList();
     }
 
-    public TableResponse putTableById(CreateTable request , Long id){
+    public TableResponse putTableById(CreateTable request, Long id) {
         AnalysisTable table = analysisTableRepository.findById(id)
                 .orElseThrow(
                         () -> new TableNotFoundException(id)
                 );
-        if (request.getName()!=null){
+        if (request.getName() != null) {
             table.setName(request.getName());
         }
-        if(!request.getTimeFrames().isEmpty()){
+        if (!request.getTimeFrames().isEmpty()) {
             table.getTimeFrames().clear();
             table.getTimeFrames().addAll(request.getTimeFrames());
         }

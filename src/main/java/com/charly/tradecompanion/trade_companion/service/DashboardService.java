@@ -11,6 +11,7 @@ import com.charly.tradecompanion.trade_companion.mapper.dashboardMapper.Dashboar
 import com.charly.tradecompanion.trade_companion.repository.AnalysisTableRepository;
 import com.charly.tradecompanion.trade_companion.repository.CriterionEvaluationRepository;
 import com.charly.tradecompanion.trade_companion.repository.CriterionRepository;
+import com.charly.tradecompanion.trade_companion.repository.TimeFrameRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,11 +19,13 @@ public class DashboardService {
     private final AnalysisTableRepository tableRepository;
     private final CriterionRepository criterionRepository;
     private final CriterionEvaluationRepository criterionEvaluationRepository ;
+    private final TimeFrameRepository timeFrameRepository ;
 
-    public DashboardService(AnalysisTableRepository tableRepository, CriterionRepository criterionRepository , CriterionEvaluationRepository criterionEvaluationRepository) {
+    public DashboardService(AnalysisTableRepository tableRepository, CriterionRepository criterionRepository , CriterionEvaluationRepository criterionEvaluationRepository , TimeFrameRepository timeFrameRepository) {
         this.tableRepository = tableRepository;
         this.criterionRepository = criterionRepository;
         this.criterionEvaluationRepository = criterionEvaluationRepository ;
+        this.timeFrameRepository = timeFrameRepository ;
     }
 
     public DashBoardResponse getDashboard() {
@@ -64,5 +67,7 @@ public class DashboardService {
 
         return response;
     }
+
+
 
 }

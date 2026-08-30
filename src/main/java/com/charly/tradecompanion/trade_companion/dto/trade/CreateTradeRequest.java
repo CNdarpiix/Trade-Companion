@@ -1,5 +1,6 @@
 package com.charly.tradecompanion.trade_companion.dto.trade;
 
+import com.charly.tradecompanion.trade_companion.entity.AnalysisSnapshot;
 import com.charly.tradecompanion.trade_companion.enums.TradeDirection;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -24,5 +25,6 @@ public class CreateTradeRequest {
     private Double takeProfit;
 
     private String openingNote;
+
 
 }
